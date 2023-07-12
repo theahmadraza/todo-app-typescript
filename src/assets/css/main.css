@@ -1,40 +1,56 @@
 @import "./base/variables.css";
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 /* Navbar */
-.navbar{
-    background-color:var(--secondary-color);
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.navbar {
+  background-color: var(--secondary-color);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.logo{
-    color: var(--text-color);
+.right-nav{
+  display: flex;
+  gap: 1rem;
 }
-
-.logo a{
-    text-decoration: none;
+.logo {
+  color: var(--text-color);
+}
+.logo a {
+  text-decoration: none;
 }
 /* Register Page  and Login Page*/
-
-.register-page, .login-page{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 80vh;
-    justify-content: center;
+.main-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 80vh;
+  justify-content: center;
+}
+.form-title {
+  margin-bottom: 1rem;
+}
+.form-field {
+  margin-bottom: 0.5rem;
 }
 
-.register-title, .login-title{
-    margin-bottom: 1rem;
+/* Dashboard */
+.dashboard-nav {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
 }
-
-.form-field{
-    margin-bottom: 0.5rem;
+.todos {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 80%;
+  align-items: center;
+  margin: 2rem auto 2rem auto;
 }
