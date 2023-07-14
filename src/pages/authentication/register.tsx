@@ -27,12 +27,12 @@ const Register: React.FC = () => {
   };
 
   const handleSubmitUser = async () => {
-    try {
-      await registerUser(user);
-      navigate("/login")
-    } catch (err) {
-      console.log(err);
-    }
+      const response = await registerUser(user);
+      if(response.status === 200){
+        navigate("/login");
+      }else if(response.response.status === 400){
+        alert("User Already Exist")
+      }
   };
   return (
     <div className="main-form">

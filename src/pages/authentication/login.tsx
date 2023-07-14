@@ -10,10 +10,10 @@ interface Users {
 
 const Login: React.FC = () => {
   const [userLogin, setUserLogin] = useState<Users>({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -24,15 +24,12 @@ const Login: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-    try {
-      const loggedInUser = await login(userLogin);
-      if(loggedInUser){
-        navigate("/dashboard")
+      const response = await login(userLogin);
+      if (response.status === 200) {
+        navigate("/dashboard");
+      }else if(response.response.status === 400){
+        alert('Invalid credentials')
       }
-      // console.log("Login Page",loggedInUser)
-    } catch (err) {
-      console.log("Error:", err);
-    }
   };
   return (
     <div className="main-form">

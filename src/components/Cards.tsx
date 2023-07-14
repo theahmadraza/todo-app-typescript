@@ -10,6 +10,7 @@ interface CardProps {
   description: string;
   image: string;
   deleteHandle: (id: string) => void;
+  editHandle: (id: string) => void;
 }
 const Cards: React.FC<CardProps> = ({
   id,
@@ -17,13 +18,14 @@ const Cards: React.FC<CardProps> = ({
   description,
   image,
   deleteHandle,
+  editHandle,
 }) => {
   return (
     <Card
       style={{ width: 300 }}
       cover={<img alt="example" src={image} />}
       actions={[
-        <EditOutlined key="edit" />,
+        <EditOutlined key="edit" onClick={() => editHandle(id)} />,
         <DeleteOutlined key="delete" onClick={() => deleteHandle(id)} />,
       ]}
     >

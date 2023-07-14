@@ -29,7 +29,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 80vh;
+  height: 60vh;
   justify-content: center;
 }
 .form-title {
@@ -39,7 +39,7 @@
   margin-bottom: 0.5rem;
 }
 
-/* Dashboard */
+/* User Dashboard */
 .dashboard-nav {
   display: flex;
   justify-content: space-around;
@@ -53,4 +53,15 @@
   width: 80%;
   align-items: center;
   margin: 2rem auto 2rem auto;
+}
+/* List View Page */
+.list-view{
+  padding: 2rem;
+  text-align: center;
+  width: 1080px;
+  margin: auto;
+}
+
+.list-view h3{
+  margin: 1rem 0;
 }
