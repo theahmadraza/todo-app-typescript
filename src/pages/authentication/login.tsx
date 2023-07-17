@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent } from "react";
 import { Button, Form, Input } from "antd";
 import { login } from "../../services/AuthServices";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 interface Users {
   email: string;
@@ -13,7 +13,7 @@ const Login: React.FC = () => {
     email: "",
     password: "",
   });
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -26,7 +26,7 @@ const Login: React.FC = () => {
   const handleSubmit = async () => {
       const response = await login(userLogin);
       if (response.status === 200) {
-        navigate("/dashboard");
+        // navigate("/dashboard");
       }else if(response.response.status === 400){
         alert('Invalid credentials')
       }
