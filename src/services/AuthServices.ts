@@ -17,7 +17,7 @@ const createAuthServices = (): AxiosInstance => {
   });
 };
 
-const registerUser = async (user: createUser): Promise<any> => {
+const signUp = async (user: createUser): Promise<any> => {
   try {
     const authServices = createAuthServices();
     const response = await authServices.post("/createuser", user);
@@ -39,5 +39,5 @@ const login = async (user: loginUser): Promise<any> => {
   }
 };
 
-export { registerUser, login };
+export { signUp, login };
 

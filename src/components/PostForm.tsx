@@ -1,35 +1,34 @@
-import React, { useState, ChangeEvent} from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import { Button, Form, Input } from "antd";
+import {
+  createTask,
+  updateTask,
+  fetchTaskById,
+} from "../services/TaskServices";
+import { useNavigate, useParams } from "react-router-dom";
 
-export interface Posts {
-  name: string;
-  description: string;
+export interface Post {
   image: string;
 }
 
-interface PostFormProps {
-  onSubmit: (data: Posts) => void;
-  btnType:string
-}
+const CreatePost: React.FC = () => {
+  const [file, setFile] = useState<Post>({ image: "" });
 
-const CreatePost: React.FC<PostFormProps> = ({onSubmit, btnType }) => {
-  const [post, setPost] = useState<Posts>({
-    name: "",
-    description: "",
-    image: "",
-  });
+  const navigate = useNavigate();
+  const { id } = useParams<{ id: string }>();
+  const [form] = Form.useForm();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const imageFile = e.target.files?.[0];
     const { name, value } = e.target;
-    setPost({
-      ...post,
+    setFile({
+      ...file,
       [name]: value,
     });
     if (imageFile) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setPost((prevData) => ({
+        setFile((prevData) => ({
           ...prevData,
           ["image"]: reader.result as string,
         }));
@@ -38,17 +37,47 @@ const CreatePost: React.FC<PostFormProps> = ({onSubmit, btnType }) => {
     }
   };
 
-  const handleSubmitPost = async (e: React.FormEvent<HTMLFormElement>) => {
-    onSubmit(post);
+  const handleSubmitPost = async (values: any) => {
+    const dataToSend = {
+      ...values,
+      image: file.image,
+    };
+    if (id) {
+      let response = await updateTask(id, dataToSend);
+      if (response.status === 200) {
+        alert("Updated successfully!");
+        navigate("/dashboard");
+      }
+    } else {
+      let response = await createTask(dataToSend);
+      if (response.status === 200) {
+        navigate("/dashboard");
+      }
+    }
   };
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      if (id) {
+        const response = await fetchTaskById(id);
+        if (response) {
+          form.setFieldValue("name", response.name);
+          form.setFieldValue("description", response.description);
+          form.setFieldValue("image", null);
+        }
+      }
+    };
+    fetchPost();
+  }, [id, form]);
 
   return (
     <div className="main-form">
       <Form
+        form={form}
         name="basic"
         layout="vertical"
         style={{ maxWidth: 600 }}
-        autoComplete="off"
+        // autoComplete="off"
         onFinish={handleSubmitPost}
       >
         <Form.Item
@@ -57,7 +86,7 @@ const CreatePost: React.FC<PostFormProps> = ({onSubmit, btnType }) => {
           name="name"
           rules={[{ required: true, message: "Title is Requried" }]}
         >
-          <Input name="name" value={post.name} onChange={handleInputChange} />
+          <Input />
         </Form.Item>
         <Form.Item
           className="form-field"
@@ -65,11 +94,7 @@ const CreatePost: React.FC<PostFormProps> = ({onSubmit, btnType }) => {
           name="description"
           rules={[{ required: true, message: "Description is Required" }]}
         >
-          <Input
-            name="description"
-            value={post.description}
-            onChange={handleInputChange}
-          />
+          <Input />
         </Form.Item>
         <Form.Item className="form-field" label="Select Image" name="image">
           <Input
@@ -79,16 +104,16 @@ const CreatePost: React.FC<PostFormProps> = ({onSubmit, btnType }) => {
             onChange={handleInputChange}
           />
         </Form.Item>
-        {post.image && (
+        {file.image && (
           <img
-            src={post.image}
+            src={file.image}
             alt="Preview"
             style={{ maxWidth: "100%", maxHeight: "50px" }}
           />
         )}
         <Form.Item>
           <Button type="primary" htmlType="submit">
-            {btnType}
+            {id ? "Update Post" : "Add Post"}
           </Button>
         </Form.Item>
       </Form>

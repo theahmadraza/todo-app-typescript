@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from "react";
 import { Button, Form, Input } from "antd";
-import { registerUser } from "../../services/AuthServices";
+import { signUp } from "../../services/AuthServices";
 import { useNavigate } from "react-router-dom";
 
 interface Users {
@@ -27,7 +27,7 @@ const Register: React.FC = () => {
   };
 
   const handleSubmitUser = async () => {
-      const response = await registerUser(user);
+      const response = await signUp(user);
       if(response.status === 200){
         navigate("/login");
       }else if(response.response.status === 400){

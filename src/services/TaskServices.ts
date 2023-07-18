@@ -22,7 +22,7 @@ const createTask = async (post: Posts) => {
   try {
     let response = await addTask.post("/addtask", post);
     console.log("Task created successfully");
-    return response.data;
+    return response;
   } catch (err) {
     console.log(err);
     throw new Error(`Failed to Create Task`);
@@ -44,7 +44,6 @@ const fetchTaskById = async (id: string): Promise<Posts | undefined> => {
   try {
     const getTask = createTaskServices();
     const response = await getTask.get(`/fetchtask/${id}`);
-    console.log(response);
     return response.data;
   } catch (err) {
     throw new Error("Faild to Fetch");
